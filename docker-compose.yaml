@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 services:
   database_ignite:
@@ -6,7 +6,7 @@ services:
     container_name: database_ignite
     restart: always
     ports:
-      - 5432:5432
+      - 5454:5432
     environment: 
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=ignite
