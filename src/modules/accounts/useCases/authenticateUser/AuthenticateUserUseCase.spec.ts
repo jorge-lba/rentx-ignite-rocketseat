@@ -55,11 +55,11 @@ describe("Authenticate User", () => {
 
     await createUserUseCase.execute(user);
 
-    await authenticateUserUseCase
-      .execute({
+    await expect(
+      authenticateUserUseCase.execute({
         email: user.email,
         password: "nonexisten",
       })
-      .catch((error) => expect(error).toBeInstanceOf(AppError));
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

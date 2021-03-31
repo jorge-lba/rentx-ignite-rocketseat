@@ -36,11 +36,10 @@ describe("Create category", () => {
       name: "Category Test",
       description: "Category Description Test",
     };
-
     await createCategoryUseCase.execute(category);
 
-    createCategoryUseCase
-      .execute(category)
-      .catch((error) => expect(error).toBeInstanceOf(AppError));
+    await expect(
+      createCategoryUseCase.execute(category)
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
