@@ -5,11 +5,11 @@
   "username":"docker",
   "password":"ignite",
   "database":"rentx",
-  "migrations":["./src/database/migration/**.ts"],
+  "migrations":["./src/shared/infra/typeorm/migrations/**.ts"],
   "entities": [
     "./src/modules/*/entities/**.ts"
   ],
   "cli":{
-    "migrationsDir":"./src/database/migration"
+    "migrationsDir":"./src/shared/infra/typeorm/migrations"
   }
 }
