@@ -12,7 +12,7 @@ export class CreateCarImages1617466414202 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "cars_id",
+            name: "car_id",
             type: "uuid",
           },
           {
@@ -30,7 +30,7 @@ export class CreateCarImages1617466414202 implements MigrationInterface {
             name: "FKCarImage",
             referencedTableName: "cars",
             referencedColumnNames: ["id"],
-            columnNames: ["cars_id"],
+            columnNames: ["car_id"],
             onDelete: "SET NULL",
             onUpdate: "SET NULL",
           },
