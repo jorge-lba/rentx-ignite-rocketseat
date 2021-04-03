@@ -6,7 +6,7 @@ services:
     container_name: database_ignite
     restart: always
     ports:
-      - 5454:5432
+      - 5432:5432
     environment: 
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=ignite
@@ -27,6 +27,8 @@ services:
     networks:
       app_net:
         ipv4_address: 172.16.238.09
+    depends_on: 
+      - database_ignite
 
 volumes: 
   pgdata:
