@@ -1,5 +1,6 @@
 import { ICreateCarsDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
+import { AppError } from "@shared/errors/AppError";
 
 import { ICarsRepository } from "../ICarsRepository";
 

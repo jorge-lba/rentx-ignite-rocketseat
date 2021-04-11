@@ -29,9 +29,19 @@ describe("Create Rental", () => {
   });
 
   it("should be able to create a new rental", async () => {
+    const car = await carsRepositoryInMemory.create({
+      name: "Test",
+      description: "Car Test",
+      daily_rate: 100,
+      license_plate: "TEST",
+      fine_amount: 40,
+      category_id: "1234",
+      brand: "Brand Test",
+    });
+
     const rental = await createRentalUseCase.execute({
       user_id: "123456",
-      car_id: "121212",
+      car_id: car.id,
       expected_return_date: dayAdd24Hours,
     });
 
@@ -46,11 +56,14 @@ describe("Create Rental", () => {
       expected_return_date: dayAdd24Hours,
     };
 
-    await createRentalUseCase.execute(rentalData);
+    await rentalsRepositoryInMemory.create(rentalData);
 
-    await expect(async () => {
-      await createRentalUseCase.execute(rentalData);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(
+      createRentalUseCase.execute({
+        ...rentalData,
+        car_id: "13321",
+      })
+    ).rejects.toEqual(new AppError("There's a rental in progress for user!"));
   });
 
   it("should be able to create a new rental if there is another open to the same user", async () => {
@@ -60,14 +73,14 @@ describe("Create Rental", () => {
       expected_return_date: dayAdd24Hours,
     };
 
-    await createRentalUseCase.execute(rentalData);
+    await rentalsRepositoryInMemory.create(rentalData);
 
-    await expect(async () => {
-      await createRentalUseCase.execute({
+    await expect(
+      createRentalUseCase.execute({
         ...rentalData,
         user_id: "654321",
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Car is unavailable"));
   });
 
   it("should be able to create a new rental with invalid return time", async () => {
@@ -77,14 +90,8 @@ describe("Create Rental", () => {
       expected_return_date: dayjs().toDate(),
     };
 
-    const result = expect(async () => {
-      await createRentalUseCase.execute(rentalData);
-    }).rejects;
-
-    await result.toBeInstanceOf(AppError);
-    await result.toEqual({
-      message: "Invalid rental time, time must be greater than 24 hours!",
-      statusCode: 400,
-    });
+    await expect(createRentalUseCase.execute(rentalData)).rejects.toEqual(
+      new AppError("Invalid rental time, time must be greater than 24 hours!")
+    );
   });
 });
