@@ -12,4 +12,8 @@ export default {
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/*.spec.ts"],
+  collectCoverage: true,
+  collectCoverageFrom: ["<rootDir>/src/modules/**/useCases/**/*.ts"],
+  coverageDirectory: "coverage",
+  coverageReporters: ["text-summary", "lcov"],
 };
