@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@sentry/node": "^6.2.5",
+    "@sentry/tracing": "^6.2.5",
     "@types/jsonwebtoken": "^8.5.1",
     "aws-sdk": "^2.887.0",
     "bcrypt": "^5.0.1",
